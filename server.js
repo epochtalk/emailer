@@ -3,9 +3,11 @@
 
 var fs = require('fs');
 var path = require('path');
+var mkdirp = require('mkdirp');
 var Hapi = require('hapi');
 var Good = require('good');
 var GoodConsole = require('good-console');
+var GoodFile = require('good-file');
 var config = require(path.join(__dirname, 'config'));
 var routes = require(path.join(__dirname, 'route'));
 
@@ -28,6 +30,17 @@ var goodPlugin = {
     reporters: [ { reporter: GoodConsole, args:[{ log: '*', request: '*', error: '*' }] } ]
   }
 };
+
+if (config.logEnabled) {
+  mkdirp.sync('./logs/operations');
+  mkdirp.sync('./logs/errors');
+  mkdirp.sync('./logs/requests');
+  var logOpts = { extension: 'log', rotationTime: 1, format: 'YYYY-MM-DD-X' };
+  var reporters = goodPlugin.options.reporters;
+  reporters.push({ reporter: GoodFile, args: ['./logs/operations/', { ops: '*' }, logOpts] });
+  reporters.push({ reporter: GoodFile, args: ['./logs/errors/', { error: '*' }, logOpts] });
+  reporters.push({ reporter: GoodFile, args: ['./logs/requests/', { request: '*' }, logOpts] });
+}
 
 server.pack.register(goodPlugin, function (err) {
   if (err) { throw err; }
