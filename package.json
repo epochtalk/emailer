@@ -1,0 +1,19 @@
+{
+  "name": "epoch-emailer",
+  "version": "0.0.1",
+  "description": "EpochTalk server for sending emails.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Slickage",
+  "license": "MIT",
+  "dependencies": {
+    "dot": "^1.0.2",
+    "good": "^4.0.0",
+    "good-console": "^2.0.1",
+    "hapi": "^7.5.2",
+    "heckler": "git+https://github.com/slickage/heckler",
+    "joi": "^4.8.1"
+  }
+}
