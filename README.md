@@ -1,7 +1,31 @@
 #Emailer
 
-Email server for EpochTalk Frontend.
+Email server for [EpochTalk Frontend](http://github.com/epochtalk/frontend).
 
+## Installation and Configuration
+
+1) Checkout repository using git:
+```sh
+$ git clone git@github.com:epochtalk/emailer.git
+```
+
+2) Change directories and install dependencies using [npm](https://www.npmjs.org/doc/README.html)
+```sh
+$ cd emailer
+$ npm install
+```
+
+3) Add and set the following configs to a `.env` file.
+```sh
+SMTP_HOST=smtp.example.com
+SMTP_USER=info@example.com
+SMTP_PASS=password
+```
+
+4) Run the server using [foreman](http://ddollar.github.io/foreman/)
+```sh
+$ foreman start -f Profile
+```
 ##Adding Templates
 * Create an html template using [doT](http://olado.github.io/doT/index.html) notation for parameters
 * Place html file in `/templates` folder
@@ -9,7 +33,7 @@ Email server for EpochTalk Frontend.
 
 ###Example
 
-**Add Template File** (`recover-account.html`)
+**Add Template File** (`templates/recover-account.html`)
 ```html
     <h3>Account Recovery</h3>
     Recover your account by visiting the link below and resetting your password:<br /><br />
