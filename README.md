@@ -44,6 +44,14 @@ exports.recoverAccount = {
 
 Call the emailer server using a library that supports unix domain sockets like request.
 ```js
+var request = require('request');
+
+var params = {
+  username: 'john',
+  email: 'john@example.com',
+  reset_token: '1a2B3c4D5E6F7h8HhI0j',
+};
+
 request.post({ url:'http://unix:/tmp/epochEmailer.sock:/recoverAccount', formData: params }, function(err, res, body) {
   if (body.statusCode === 200) {
     console.log(body.message); // success
