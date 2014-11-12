@@ -59,13 +59,3 @@ process.on('uncaughtException', function() {
   cleanupSocket();
   process.exit();
 });
-
-exports.start = function() {
-  cleanupSocket();
-  server.start();
-};
-
-exports.stop = function() {
-  server.stop();
-  cleanupSocket();
-};
