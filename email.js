@@ -10,7 +10,7 @@ var config = require(path.join(__dirname, 'config'));
 exports.recoverAccount = {
   schema: {
     username: Joi.string().min(1).max(255).required(),
-    reset_token: Joi.string().token().length(40).required(),
+    reset_url: Joi.string().required(),
     email: Joi.string().email().required()
   },
   compile: function (params) {
@@ -19,7 +19,7 @@ exports.recoverAccount = {
       from: config.senderEmail,
       to: params.email,
       subject: '[EpochTalk] Account Recovery',
-      html: template({ username: params.username, rootUrl: config.hostUrl, resetToken: params.reset_token})
+      html: template({ username: params.username, resetUrl: params.reset_url })
     };
   }
 };

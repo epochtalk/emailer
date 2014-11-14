@@ -13,6 +13,11 @@ var routes = require(path.join(__dirname, 'route'));
 
 var socketPath = config.socketPath;
 
+if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASS) {
+  console.warn('Error starting Epoch Emailer. Environment variables for SMTP_HOST, SMTP_USER, and SMTP_PASS must be set.');
+  process.exit();
+}
+
 var cleanupSocket = function() {
   if (fs.existsSync(socketPath)) {
     fs.unlinkSync(socketPath);
