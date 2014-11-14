@@ -2,8 +2,8 @@
 'use strict';
 
 var path = require('path');
-var Hapi = require('hapi');
-var Joi = require('joi');
+var hapi = require('hapi');
+var joi = require('joi');
 var heckler = require('heckler');
 var emailTemplates = require(path.join(__dirname, 'email'));
 
@@ -13,14 +13,14 @@ module.exports = {
   config: {
     handler: function(request, reply) {
       var badRequest = function (msg) {
-        reply(Hapi.error.badRequest(msg));
+        reply(hapi.error.badRequest(msg));
       };
 
       var templateName = request.params.template_name;
       var email = emailTemplates[templateName];
       if (!email) { return badRequest(templateName + ' is not a valid template'); }
 
-      var validate = Joi.validate(request.payload, email.schema);
+      var validate = joi.validate(request.payload, email.schema);
       if (validate.error) { return badRequest(validate.error); }
 
       var template = email.compile(request.payload);
@@ -29,6 +29,6 @@ module.exports = {
         reply({ statusCode: 200, message: 'Email successfully sent'});
       });
     },
-    validate: { params: { template_name: Joi.string().required() } }
+    validate: { params: { template_name: joi.string().required() } }
   }
 };

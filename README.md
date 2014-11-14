@@ -46,9 +46,9 @@ $ foreman start -f Profile
 ```js
 exports.recoverAccount = {
   schema: {
-    username: Joi.string().min(1).max(255).required(),
-    reset_token: Joi.string().token().length(20).required(),
-    email: Joi.string().email().required()
+    username: joi.string().min(1).max(255).required(),
+    reset_token: joi.string().token().length(20).required(),
+    email: joi.string().email().required()
   },
   compile: function (params) {
     var template = doT.template(fs.readFileSync(__dirname + '/templates/recover-account.html'));

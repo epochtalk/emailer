@@ -4,14 +4,14 @@
 var path = require('path');
 var doT = require('dot');
 var fs = require('fs');
-var Joi = require('joi');
+var joi = require('joi');
 var config = require(path.join(__dirname, 'config'));
 
 exports.recoverAccount = {
   schema: {
-    username: Joi.string().min(1).max(255).required(),
-    reset_url: Joi.string().required(),
-    email: Joi.string().email().required()
+    username: joi.string().min(1).max(255).required(),
+    reset_url: joi.string().required(),
+    email: joi.string().email().required()
   },
   compile: function (params) {
     var template = doT.template(fs.readFileSync(__dirname + '/templates/recover-account.html'));

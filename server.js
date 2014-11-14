@@ -4,17 +4,19 @@
 var fs = require('fs');
 var path = require('path');
 var mkdirp = require('mkdirp');
-var Hapi = require('hapi');
-var Good = require('good');
-var GoodConsole = require('good-console');
-var GoodFile = require('good-file');
+var hapi = require('hapi');
+var good = require('good');
+var goodConsole = require('good-console');
+var goodFile = require('good-file');
 var config = require(path.join(__dirname, 'config'));
 var routes = require(path.join(__dirname, 'route'));
 
 var socketPath = config.socketPath;
 
 if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASS) {
-  console.warn('Error starting Epoch Emailer. Environment variables for SMTP_HOST, SMTP_USER, and SMTP_PASS must be set.');
+  var warning = 'Error starting Epoch Emailer. Environment variables for SMTP_HOST' +
+    ', SMTP_USER, and SMTP_PASS must be set.';
+  console.warn(warning);
   process.exit();
 }
 
@@ -26,13 +28,13 @@ var cleanupSocket = function() {
 
 cleanupSocket();
 
-var server = Hapi.createServer(socketPath);
+var server = hapi.createServer(socketPath);
 server.route(routes);
 
 var goodPlugin = {
-  plugin: Good,
+  plugin: good,
   options: {
-    reporters: [ { reporter: GoodConsole, args:[{ log: '*', request: '*', error: '*' }] } ]
+    reporters: [ { reporter: goodConsole, args:[{ log: '*', request: '*', error: '*' }] } ]
   }
 };
 
@@ -42,9 +44,9 @@ if (config.logEnabled) {
   mkdirp.sync('./logs/requests');
   var logOpts = { extension: 'log', rotationTime: 1, format: 'YYYY-MM-DD-X' };
   var reporters = goodPlugin.options.reporters;
-  reporters.push({ reporter: GoodFile, args: ['./logs/operations/', { ops: '*' }, logOpts] });
-  reporters.push({ reporter: GoodFile, args: ['./logs/errors/', { error: '*' }, logOpts] });
-  reporters.push({ reporter: GoodFile, args: ['./logs/requests/', { request: '*' }, logOpts] });
+  reporters.push({ reporter: goodFile, args: ['./logs/operations/', { ops: '*' }, logOpts] });
+  reporters.push({ reporter: goodFile, args: ['./logs/errors/', { error: '*' }, logOpts] });
+  reporters.push({ reporter: goodFile, args: ['./logs/requests/', { request: '*' }, logOpts] });
 }
 
 server.pack.register(goodPlugin, function (err) {
