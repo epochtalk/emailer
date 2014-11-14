@@ -47,16 +47,16 @@ $ foreman start -f Profile
 exports.recoverAccount = {
   schema: {
     username: joi.string().min(1).max(255).required(),
-    reset_token: joi.string().token().length(20).required(),
+    reset_url: joi.string().required(),
     email: joi.string().email().required()
   },
-  compile: function (params) {
-    var template = doT.template(fs.readFileSync(__dirname + '/templates/recover-account.html'));
+  compile: function(params) {
+    var template = doT.template(templateFile('recover-account.html'));
     return {
       from: config.senderEmail,
       to: params.email,
       subject: '[EpochTalk] Account Recovery',
-      html: template({ username: params.username, rootUrl: config.hostUrl, resetToken: params.resetToken})
+      html: template({ username: params.username, resetUrl: params.reset_url })
     };
   }
 };
@@ -73,7 +73,7 @@ var request = require('request');
 var params = {
   username: 'john',
   email: 'john@example.com',
-  reset_token: '1a2B3c4D5E6F7h8HhI0j',
+  reset_url: 'http://localhost:8080/reset/john/123412412412412',
 };
 
 request.post({ url:'http://unix:/tmp/epochEmailer.sock:/recoverAccount', formData: params }, function(err, res, body) {
