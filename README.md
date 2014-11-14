@@ -35,11 +35,11 @@ $ foreman start -f Profile
 
 **Add Template File** (`templates/recover-account.html`)
 ```html
-    <h3>Account Recovery</h3>
-    Recover your account by visiting the link below and resetting your password:<br /><br />
-    <strong>Username</strong>: {{=it.username}}<br />
-    <strong>Password</strong>:
-    <a href="{{=it.rootUrl}}/reset/{{=it.username}}/{{=it.resetToken}}">Reset</a>
+  <h3>Account Recovery</h3>
+  Recover your account by visiting the link below and resetting your password:<br /><br />
+  <strong>Username</strong>: {{=it.username}}<br />
+  <strong>Password</strong>:
+  <a href="{{=it.resetUrl}}">Reset</a>
 ```
 
 **Add Template Export to** `email.js`
