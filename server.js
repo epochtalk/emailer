@@ -39,14 +39,14 @@ var goodPlugin = {
 };
 
 if (config.logEnabled) {
-  mkdirp.sync('./logs/operations');
-  mkdirp.sync('./logs/errors');
-  mkdirp.sync('./logs/requests');
+  mkdirp.sync('./logs/emailer/operations');
+  mkdirp.sync('./logs/emailer/errors');
+  mkdirp.sync('./logs/emailer/requests');
   var logOpts = { extension: 'log', rotationTime: 1, format: 'YYYY-MM-DD-X' };
   var reporters = goodPlugin.options.reporters;
-  reporters.push({ reporter: goodFile, args: ['./logs/operations/', { ops: '*' }, logOpts] });
-  reporters.push({ reporter: goodFile, args: ['./logs/errors/', { error: '*' }, logOpts] });
-  reporters.push({ reporter: goodFile, args: ['./logs/requests/', { request: '*' }, logOpts] });
+  reporters.push({ reporter: goodFile, args: ['./logs/emailer/operations/', { ops: '*' }, logOpts] });
+  reporters.push({ reporter: goodFile, args: ['./logs/emailer/errors/', { error: '*' }, logOpts] });
+  reporters.push({ reporter: goodFile, args: ['./logs/emailer/requests/', { request: '*' }, logOpts] });
 }
 
 server.pack.register(goodPlugin, function (err) {
