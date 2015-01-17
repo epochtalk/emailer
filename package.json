@@ -1,5 +1,5 @@
 {
-  "name": "epoch-emailer",
+  "name": "epochtalk-emailer",
   "version": "0.0.1",
   "description": "EpochTalk server for sending emails.",
   "main": "server.js",
