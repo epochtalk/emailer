@@ -1,3 +1,4 @@
+var os = require('os');
 var emailerSocketPath = '/var/run/epochEmailer.sock';
 if (os === 'darwin') {
   emailerSocketPath = '/tmp/epochEmailer.sock';
